@@ -1,0 +1,1 @@
+TextEmend allows you to batch process text files to do a find/replace using a list of regular expressions and corresponding replacements. Not for the faint of heart when it comes to regex formulation.
