@@ -59,7 +59,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(162, 26);
             this.label1.TabIndex = 1;
-            this.label1.Text = "TextEmend v0.97";
+            this.label1.Text = "TextEmend v1.00";
             this.label1.UseWaitCursor = true;
             // 
             // label2

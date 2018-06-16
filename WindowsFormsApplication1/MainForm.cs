@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Data;
+using System.Threading.Tasks;
 
 
 namespace WindowsFormsApplication1
@@ -157,34 +158,40 @@ namespace WindowsFormsApplication1
 
             try {
 
-               
-                    foreach (string fileName in files)
-                    {
+                //we want to be conservative and limit the number of threads to the number of processors that we have
+                var options = new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount};
+                Parallel.ForEach(files, options, (string fileName) =>
+                {
 
                         //set up our variables to report
                         string Filename_Clean = Path.GetFileName(fileName);
 
-                        string SubDirStructure = Path.GetDirectoryName(fileName).Replace(DictData.TextFileFolder, "").TrimStart('\\');
+                    string SubDirStructure = Path.GetDirectoryName(fileName).Replace(DictData.TextFileFolder, "").TrimStart('\\');
 
 
                         //creates subdirs if they don't exist
-                        
+
 
 
                         string Output_Location = DictData.OutputFileLocation + '\\' + SubDirStructure;
 
-                        if (!Directory.Exists(Output_Location))
-                        {
-                            Directory.CreateDirectory(Output_Location);
-                        }
+                    if (!Directory.Exists(Output_Location))
+                    {
+                        Directory.CreateDirectory(Output_Location);
+                    }
 
-                        Output_Location = Path.Combine(Output_Location, Path.GetFileName(fileName));
+                    Output_Location = Path.Combine(Output_Location, Path.GetFileName(fileName));
 
-                    //report what we're working on
-                    FilenameLabel.Invoke((MethodInvoker)delegate
-                        {
-                            FilenameLabel.Text = "Processing: " + Filename_Clean;
-                        });
+                        //report what we're working on
+                        FilenameLabel.Invoke((MethodInvoker)delegate
+                    {
+                        FilenameLabel.Text = "Processing: " + Filename_Clean;
+                        FilenameLabel.Invalidate();
+                        FilenameLabel.Update();
+                        FilenameLabel.Refresh();
+                        Application.DoEvents();
+
+                    });
 
 
 
@@ -192,7 +199,7 @@ namespace WindowsFormsApplication1
                         //read in the text file, convert everything to lowercase
                         string readText = File.ReadAllText(fileName, SelectedEncoding);
 
-                        if (DictData.CompactWhitespace) readText = Regex.Replace(readText, @"\s+", " ");
+                    if (DictData.CompactWhitespace) readText = Regex.Replace(readText, @"\s+", " ");
 
 
                         //     _                _                 _____         _   
@@ -203,38 +210,38 @@ namespace WindowsFormsApplication1
                         //                        |___/                             
 
                         for (int i = 0; i < DictData.RegexArray.Length; i++)
-                        {
+                    {
 
-                            int NumMatches = DictData.RegexArray[i].Matches(readText).Count;
+                        int NumMatches = DictData.RegexArray[i].Matches(readText).Count;
 
-                            if (NumMatches == 0) continue;
+                        if (NumMatches == 0) continue;
 
-                            DictData.NumberOfMatches[i] += (uint)NumMatches;
-                            DictData.TotalFilesMatched[i] += 1;
+                        DictData.NumberOfMatches[i] += (uint)NumMatches;
+                        DictData.TotalFilesMatched[i] += 1;
 
-                            readText = DictData.RegexArray[i].Replace(readText, DictData.ReplacementArray[i]);
+                        readText = DictData.RegexArray[i].Replace(readText, DictData.ReplacementArray[i]);
 
-                        }
-
-
+                    }
 
 
 
-                    // __        __    _ _          ___        _               _   
-                    // \ \      / / __(_) |_ ___   / _ \ _   _| |_ _ __  _   _| |_ 
-                    //  \ \ /\ / / '__| | __/ _ \ | | | | | | | __| '_ \| | | | __|
-                    //   \ V  V /| |  | | ||  __/ | |_| | |_| | |_| |_) | |_| | |_ 
-                    //    \_/\_/ |_|  |_|\__\___|  \___/ \__,_|\__| .__/ \__,_|\__|
-                    //                                            |_|              
 
-                    //open up the output file
-                    using (StreamWriter outputFile = new StreamWriter(new FileStream(Output_Location, FileMode.Create), SelectedEncoding))
+
+                        // __        __    _ _          ___        _               _   
+                        // \ \      / / __(_) |_ ___   / _ \ _   _| |_ _ __  _   _| |_ 
+                        //  \ \ /\ / / '__| | __/ _ \ | | | | | | | __| '_ \| | | | __|
+                        //   \ V  V /| |  | | ||  __/ | |_| | |_| | |_| |_) | |_| | |_ 
+                        //    \_/\_/ |_|  |_|\__\___|  \___/ \__,_|\__| .__/ \__,_|\__|
+                        //                                            |_|              
+
+                        //open up the output file
+                        using (StreamWriter outputFile = new StreamWriter(new FileStream(Output_Location, FileMode.Create), SelectedEncoding))
                     {
                         outputFile.Write(readText);
                     }
 
 
-                }
+                });
 
 
                 using (StreamWriter outputFile = new StreamWriter(new FileStream(Path.Combine(DictData.OutputFileLocation, "__TextEmend-Report.csv"), FileMode.Create), SelectedEncoding))
@@ -367,12 +374,12 @@ namespace WindowsFormsApplication1
 
 
 
-            //  ____                   _       _         ____  _      _   ____        _           ___  _     _           _   
-            // |  _ \ ___  _ __  _   _| | __ _| |_ ___  |  _ \(_) ___| |_|  _ \  __ _| |_ __ _   / _ \| |__ (_) ___  ___| |_ 
-            // | |_) / _ \| '_ \| | | | |/ _` | __/ _ \ | | | | |/ __| __| | | |/ _` | __/ _` | | | | | '_ \| |/ _ \/ __| __|
-            // |  __/ (_) | |_) | |_| | | (_| | ||  __/ | |_| | | (__| |_| |_| | (_| | || (_| | | |_| | |_) | |  __/ (__| |_ 
-            // |_|   \___/| .__/ \__,_|_|\__,_|\__\___| |____/|_|\___|\__|____/ \__,_|\__\__,_|  \___/|_.__// |\___|\___|\__|
-            //            |_|                                                                             |__/               
+            //  ____                   _       _         ____            _____        ____            _                                     _       
+            // |  _ \ ___  _ __  _   _| | __ _| |_ ___  |  _ \ ___  __ _| ____|_  __ |  _ \ ___ _ __ | | __ _  ___ ___ _ __ ___   ___ _ __ | |_ ___ 
+            // | |_) / _ \| '_ \| | | | |/ _` | __/ _ \ | |_) / _ \/ _` |  _| \ \/ / | |_) / _ \ '_ \| |/ _` |/ __/ _ \ '_ ` _ \ / _ \ '_ \| __/ __|
+            // |  __/ (_) | |_) | |_| | | (_| | ||  __/ |  _ <  __/ (_| | |___ >  <  |  _ <  __/ |_) | | (_| | (_|  __/ | | | | |  __/ | | | |_\__ \
+            // |_|   \___/| .__/ \__,_|_|\__,_|\__\___| |_| \_\___|\__, |_____/_/\_\ |_| \_\___| .__/|_|\__,_|\___\___|_| |_| |_|\___|_| |_|\__|___/
+            //            |_|                                      |___/                       |_|                                                                                                                           |__/               
 
 
 
@@ -428,8 +435,8 @@ namespace WindowsFormsApplication1
                 DataGridPreview.Columns.Clear();
                 DataGridPreview.Rows.Clear();
                 DataGridPreview.DataSource = dt;
-                DataGridPreview.AutoResizeColumns();
                 DataGridPreview.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                DataGridPreview.AutoResizeColumns();
                 DataGridPreview.Update();
 
 
