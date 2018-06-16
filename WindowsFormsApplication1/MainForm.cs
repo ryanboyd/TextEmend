@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Data;
 
 
 namespace WindowsFormsApplication1
@@ -25,7 +26,17 @@ namespace WindowsFormsApplication1
 
             InitializeComponent();
 
-            foreach(var encoding in Encoding.GetEncodings())
+            DataGridPreview.DataSource = null;
+            DataGridPreview.ColumnCount = 2;
+            DataGridPreview.Columns[0].Name = "RegEx";
+            DataGridPreview.Columns[1].Name = "Repacement";
+            DataGridPreview.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            DataGridPreview.Update();
+
+
+
+
+            foreach (var encoding in Encoding.GetEncodings())
             {
                 EncodingDropdown.Items.Add(encoding.Name);
             }
@@ -330,6 +341,8 @@ namespace WindowsFormsApplication1
 
                 FolderBrowser.SelectedPath = System.IO.Path.GetDirectoryName(openFileDialog.FileName);
 
+                
+
                 //Load dictionary file now
                 try
                 {
@@ -369,17 +382,30 @@ namespace WindowsFormsApplication1
             List<Regex> RegexList = new List<Regex>();
             List<string> ReplacementList = new List<string>();
 
+            
+
 
             try
             {
+
+
+                DataTable dt = new DataTable();
+                dt.Columns.Add("RegEx");
+                dt.Columns.Add("Replacement");
+
+
                 string[] EntryLines = RegexListFileRawText.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
                 //Map out the input entries
                 for (int i = 0; i < EntryLines.Length; i++)
                 {
 
+                    System.Data.DataTable table = new System.Data.DataTable("RegExTable");
+
+
                     string[] EntryRow = EntryLines[i].Split(new char[] { '\t' });
 
+                    dt.Rows.Add(new string[] { EntryRow[0], EntryRow[1] });
 
                     if (CaseSensitiveCheckbox.Checked) { 
                         RegexList.Add(new Regex(@EntryRow[0], RegexOptions.Compiled));
@@ -398,11 +424,31 @@ namespace WindowsFormsApplication1
 
                 DictData.RegExListLoaded = true;
 
+                DataGridPreview.DataSource = null;
+                DataGridPreview.Columns.Clear();
+                DataGridPreview.Rows.Clear();
+                DataGridPreview.DataSource = dt;
+                DataGridPreview.AutoResizeColumns();
+                DataGridPreview.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                DataGridPreview.Update();
+
+
+
                 MessageBox.Show("Your regular expression list has been successfully loaded.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
             catch
             {
+
+                DataGridPreview.DataSource = null;
+                DataGridPreview.Columns.Clear();
+                DataGridPreview.Rows.Clear();
+                DataGridPreview.ColumnCount = 2;
+                DataGridPreview.Columns[0].Name = "RegEx";
+                DataGridPreview.Columns[1].Name = "Repacement";
+                DataGridPreview.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                DataGridPreview.Update();
+
                 MessageBox.Show("TextEmend encountered an error while trying to parse out your RegEx list. Please check to make sure that it is correctly formatted, that your regular expressions are valid, and that your list file is not currently open in another application.", "Error parsing RegEx list", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 DictData = new DictionaryData();
                 return;

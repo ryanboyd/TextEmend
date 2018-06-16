@@ -42,7 +42,9 @@
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.LoadDictionaryButton = new System.Windows.Forms.Button();
             this.saveOutputDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.DataGridPreview = new System.Windows.Forms.DataGridView();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DataGridPreview)).BeginInit();
             this.SuspendLayout();
             // 
             // BgWorker
@@ -63,7 +65,7 @@
             // StartButton
             // 
             this.StartButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StartButton.Location = new System.Drawing.Point(66, 241);
+            this.StartButton.Location = new System.Drawing.Point(512, 241);
             this.StartButton.Name = "StartButton";
             this.StartButton.Size = new System.Drawing.Size(152, 32);
             this.StartButton.TabIndex = 3;
@@ -80,7 +82,7 @@
             // 
             this.FilenameLabel.AutoEllipsis = true;
             this.FilenameLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.FilenameLabel.Location = new System.Drawing.Point(12, 287);
+            this.FilenameLabel.Location = new System.Drawing.Point(458, 287);
             this.FilenameLabel.Name = "FilenameLabel";
             this.FilenameLabel.Size = new System.Drawing.Size(260, 15);
             this.FilenameLabel.TabIndex = 6;
@@ -115,7 +117,7 @@
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.ScanSubfolderCheckbox);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(12, 12);
+            this.groupBox2.Location = new System.Drawing.Point(458, 12);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(260, 177);
             this.groupBox2.TabIndex = 19;
@@ -154,7 +156,7 @@
             // LoadDictionaryButton
             // 
             this.LoadDictionaryButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LoadDictionaryButton.Location = new System.Drawing.Point(66, 203);
+            this.LoadDictionaryButton.Location = new System.Drawing.Point(512, 203);
             this.LoadDictionaryButton.Name = "LoadDictionaryButton";
             this.LoadDictionaryButton.Size = new System.Drawing.Size(152, 32);
             this.LoadDictionaryButton.TabIndex = 20;
@@ -162,12 +164,26 @@
             this.LoadDictionaryButton.UseVisualStyleBackColor = true;
             this.LoadDictionaryButton.Click += new System.EventHandler(this.LoadDictionaryButton_Click);
             // 
+            // DataGridPreview
+            // 
+            this.DataGridPreview.AllowUserToAddRows = false;
+            this.DataGridPreview.AllowUserToDeleteRows = false;
+            this.DataGridPreview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DataGridPreview.Location = new System.Drawing.Point(13, 12);
+            this.DataGridPreview.Name = "DataGridPreview";
+            this.DataGridPreview.ReadOnly = true;
+            this.DataGridPreview.RowHeadersVisible = false;
+            this.DataGridPreview.Size = new System.Drawing.Size(420, 290);
+            this.DataGridPreview.TabIndex = 21;
+            this.DataGridPreview.VirtualMode = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSalmon;
-            this.ClientSize = new System.Drawing.Size(284, 311);
+            this.ClientSize = new System.Drawing.Size(734, 311);
+            this.Controls.Add(this.DataGridPreview);
             this.Controls.Add(this.LoadDictionaryButton);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.FilenameLabel);
@@ -175,13 +191,14 @@
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(300, 350);
-            this.MinimumSize = new System.Drawing.Size(300, 350);
+            this.MaximumSize = new System.Drawing.Size(750, 350);
+            this.MinimumSize = new System.Drawing.Size(750, 350);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TextEmend";
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DataGridPreview)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -200,6 +217,7 @@
         private System.Windows.Forms.FolderBrowserDialog saveOutputDialog;
         private System.Windows.Forms.CheckBox CaseSensitiveCheckbox;
         private System.Windows.Forms.CheckBox CompactWhitespaceCheckbox;
+        private System.Windows.Forms.DataGridView DataGridPreview;
     }
 }
 
