@@ -56,6 +56,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.5 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.5"
+                    }
+                }
             }
         }
         "Release"
@@ -225,15 +233,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:TextEmend"
-        "ProductCode" = "8:{84E98414-1F48-4FD0-B65B-501D89FD0C26}"
-        "PackageCode" = "8:{87FB926F-B9DF-4D0D-A3F7-7684A2244572}"
+        "ProductCode" = "8:{4B2905CC-23F9-4560-BC9D-5FA30C66D324}"
+        "PackageCode" = "8:{1034C9AA-2BFB-42AF-9C74-E60BE3F4472B}"
         "UpgradeCode" = "8:{05866D4E-10EF-450C-8460-684FCBF1EEA2}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.92"
+        "ProductVersion" = "8:0.93"
         "Manufacturer" = "8:Ryan L. Boyd, Ph.D."
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://ryanb.cc"

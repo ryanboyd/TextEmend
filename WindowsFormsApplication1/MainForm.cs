@@ -146,20 +146,31 @@ namespace WindowsFormsApplication1
 
             try {
 
-                //open up the output file
-                //using (StreamWriter outputFile = new StreamWriter(new FileStream(DictData.OutputFileLocation, FileMode.Create), SelectedEncoding))
-
-
-
+               
                     foreach (string fileName in files)
                     {
 
                         //set up our variables to report
                         string Filename_Clean = Path.GetFileName(fileName);
-                        string Output_Location = Path.Combine(DictData.OutputFileLocation, Path.GetFileName(fileName));
+
+                        string SubDirStructure = Path.GetDirectoryName(fileName).Replace(DictData.TextFileFolder, "").TrimStart('\\');
+
+
+                        //creates subdirs if they don't exist
                         
-                        //report what we're working on
-                        FilenameLabel.Invoke((MethodInvoker)delegate
+
+
+                        string Output_Location = DictData.OutputFileLocation + '\\' + SubDirStructure;
+
+                        if (!Directory.Exists(Output_Location))
+                        {
+                            Directory.CreateDirectory(Output_Location);
+                        }
+
+                        Output_Location = Path.Combine(Output_Location, Path.GetFileName(fileName));
+
+                    //report what we're working on
+                    FilenameLabel.Invoke((MethodInvoker)delegate
                         {
                             FilenameLabel.Text = "Processing: " + Filename_Clean;
                         });
