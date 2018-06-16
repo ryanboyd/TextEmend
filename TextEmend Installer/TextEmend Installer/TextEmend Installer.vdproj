@@ -15,7 +15,7 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_4326DED93ECD4639BCD59B5672611976"
+        "MsmKey" = "8:_24F79C32BC724101B9ED44164F9035F1"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -126,10 +126,10 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4326DED93ECD4639BCD59B5672611976"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_24F79C32BC724101B9ED44164F9035F1"
             {
-            "SourcePath" = "8:..\\..\\WindowsFormsApplication1\\Resources\\textemend.ico"
-            "TargetName" = "8:textemend.ico"
+            "SourcePath" = "8:..\\..\\WindowsFormsApplication1\\Resources\\TE.ico"
+            "TargetName" = "8:TE.ico"
             "Tag" = "8:"
             "Folder" = "8:_98B9CC1687C94F7ABDA3A5A3E61DA854"
             "Condition" = "8:"
@@ -251,7 +251,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:Batch RegEx Replace"
         "ARPURLINFOABOUT" = "8:https://ryanb.cc"
-        "ARPPRODUCTICON" = "8:_4326DED93ECD4639BCD59B5672611976"
+        "ARPPRODUCTICON" = "8:_24F79C32BC724101B9ED44164F9035F1"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -365,7 +365,7 @@
             "Target" = "8:_B5D2B7270D5D4DF8A0AE0E0CB53A24E5"
             "Folder" = "8:_4CD0E0BB42764246BC8F0FCD78D0A18A"
             "WorkingFolder" = "8:_98B9CC1687C94F7ABDA3A5A3E61DA854"
-            "Icon" = "8:_4326DED93ECD4639BCD59B5672611976"
+            "Icon" = "8:_24F79C32BC724101B9ED44164F9035F1"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D7193EC8890B4A18ADC5588F3979B662"
@@ -379,7 +379,7 @@
             "Target" = "8:_B5D2B7270D5D4DF8A0AE0E0CB53A24E5"
             "Folder" = "8:_7BC689E609084CA2A20B1495874A79EC"
             "WorkingFolder" = "8:_98B9CC1687C94F7ABDA3A5A3E61DA854"
-            "Icon" = "8:_4326DED93ECD4639BCD59B5672611976"
+            "Icon" = "8:_24F79C32BC724101B9ED44164F9035F1"
             "Feature" = "8:"
             }
         }

@@ -73,9 +73,9 @@ namespace TextEmend.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon textemend {
+        internal static System.Drawing.Icon TE {
             get {
-                object obj = ResourceManager.GetObject("textemend", resourceCulture);
+                object obj = ResourceManager.GetObject("TE", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

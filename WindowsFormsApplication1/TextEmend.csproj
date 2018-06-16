@@ -52,7 +52,7 @@
     <StartupObject>WindowsFormsApplication1.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\textemend.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\TE.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -114,10 +114,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="context.ico" />
-    <None Include="Resources\textemend.ico" />
     <None Include="Resources\regex.png" />
-    <Content Include="Search.ico" />
+    <None Include="Resources\TE.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
