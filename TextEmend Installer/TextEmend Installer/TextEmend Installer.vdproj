@@ -354,7 +354,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_3A3F6D6AF92E491AA40A51247824F016"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_6294899FB1BA4DA59A926FBEE0A83273"
             {
             "Name" = "8:TextEmend"
             "Arguments" = "8:"
@@ -368,7 +368,7 @@
             "Icon" = "8:_24F79C32BC724101B9ED44164F9035F1"
             "Feature" = "8:"
             }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D7193EC8890B4A18ADC5588F3979B662"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_E444D13110C747D7833FD3816B63E8D5"
             {
             "Name" = "8:TextEmend"
             "Arguments" = "8:"
