@@ -154,7 +154,7 @@ namespace WindowsFormsApplication1
             {
                 SearchDepth = SearchOption.AllDirectories;
             }
-            var files = Directory.EnumerateFiles(BGData.TextFileFolder, "*" + BGData.Filetype, SearchDepth);
+            var files = Directory.EnumerateFiles(BGData.TextFileFolder, BGData.Filetype, SearchDepth);
 
 
 
@@ -468,15 +468,6 @@ namespace WindowsFormsApplication1
 
     }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void FiletypeTextbox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
     }
     
 

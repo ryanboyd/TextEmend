@@ -186,8 +186,8 @@
             this.FiletypeTextbox.Name = "FiletypeTextbox";
             this.FiletypeTextbox.Size = new System.Drawing.Size(100, 23);
             this.FiletypeTextbox.TabIndex = 22;
-            this.FiletypeTextbox.Text = ".txt";
-            this.FiletypeTextbox.TextChanged += new System.EventHandler(this.FiletypeTextbox_TextChanged);
+            this.FiletypeTextbox.Text = "*.txt";
+
             // 
             // label1
             // 
@@ -198,7 +198,7 @@
             this.label1.Size = new System.Drawing.Size(132, 16);
             this.label1.TabIndex = 23;
             this.label1.Text = "Search for extension:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+
             // 
             // Form1
             // 
