@@ -17,7 +17,7 @@ namespace WindowsFormsApplication1
 
 
         //initialize the space for our dictionary data
-        DictionaryData DictData = new DictionaryData();
+        BGWorkerData BGData = new BGWorkerData();
 
 
 
@@ -66,7 +66,7 @@ namespace WindowsFormsApplication1
 
 
                     //make sure that our dictionary is loaded before anything else
-                    if (DictData.RegExListLoaded != true)
+                    if (BGData.RegExListLoaded != true)
                     {
                         MessageBox.Show("You must first load a RegEx list before you can process your texts.", "RegEx list not loaded!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
@@ -76,13 +76,13 @@ namespace WindowsFormsApplication1
                     FolderBrowser.Description = "Please choose the location of your .txt files to analyze";
                     if (FolderBrowser.ShowDialog() != DialogResult.Cancel) {
 
-                        DictData.TextFileFolder = FolderBrowser.SelectedPath.ToString();
+                        BGData.TextFileFolder = FolderBrowser.SelectedPath.ToString();
                 
-                        if (DictData.TextFileFolder != "")
+                        if (BGData.TextFileFolder != "")
                         {
 
                             saveOutputDialog.Description = "Please choose a folder for your output files";
-                            saveOutputDialog.SelectedPath = DictData.TextFileFolder;
+                            saveOutputDialog.SelectedPath = BGData.TextFileFolder;
                             if (saveOutputDialog.ShowDialog() != DialogResult.Cancel) {
 
 
@@ -92,10 +92,11 @@ namespace WindowsFormsApplication1
                                     return;
                                 }
 
-                                DictData.OutputFileLocation = saveOutputDialog.SelectedPath;
-                                DictData.CompactWhitespace = CompactWhitespaceCheckbox.Checked;
+                                BGData.OutputFileLocation = saveOutputDialog.SelectedPath;
+                                BGData.CompactWhitespace = CompactWhitespaceCheckbox.Checked;
+                                BGData.Filetype = FiletypeTextbox.Text;
 
-                                if (DictData.OutputFileLocation != "") {
+                                if (BGData.OutputFileLocation != "") {
 
 
 
@@ -105,8 +106,9 @@ namespace WindowsFormsApplication1
                                     EncodingDropdown.Enabled = false;
                                     LoadDictionaryButton.Enabled = false;
                                     CompactWhitespaceCheckbox.Enabled = false;
+                                    FiletypeTextbox.Enabled = false;
                             
-                                    BgWorker.RunWorkerAsync(DictData);
+                                    BgWorker.RunWorkerAsync(BGData);
                                 }
                             }
                         }
@@ -126,14 +128,14 @@ namespace WindowsFormsApplication1
         {
 
 
-            DictionaryData DictData = (DictionaryData)e.Argument;
-            DictData.NumberOfMatches = new uint[DictData.RegexArray.Length];
-            DictData.TotalFilesMatched = new uint[DictData.RegexArray.Length];
+            BGWorkerData BGData = (BGWorkerData)e.Argument;
+            BGData.NumberOfMatches = new uint[BGData.RegexArray.Length];
+            BGData.TotalFilesMatched = new uint[BGData.RegexArray.Length];
 
-            for(int i = 0; i < DictData.NumberOfMatches.Length; i++)
+            for(int i = 0; i < BGData.NumberOfMatches.Length; i++)
             {
-                DictData.NumberOfMatches[i] = 0;
-                DictData.TotalFilesMatched[i] = 0;
+                BGData.NumberOfMatches[i] = 0;
+                BGData.TotalFilesMatched[i] = 0;
             }
 
 
@@ -152,7 +154,7 @@ namespace WindowsFormsApplication1
             {
                 SearchDepth = SearchOption.AllDirectories;
             }
-            var files = Directory.EnumerateFiles(DictData.TextFileFolder, "*.txt", SearchDepth);
+            var files = Directory.EnumerateFiles(BGData.TextFileFolder, "*" + BGData.Filetype, SearchDepth);
 
 
 
@@ -166,14 +168,14 @@ namespace WindowsFormsApplication1
                         //set up our variables to report
                         string Filename_Clean = Path.GetFileName(fileName);
 
-                    string SubDirStructure = Path.GetDirectoryName(fileName).Replace(DictData.TextFileFolder, "").TrimStart('\\');
+                    string SubDirStructure = Path.GetDirectoryName(fileName).Replace(BGData.TextFileFolder, "").TrimStart('\\');
 
 
                         //creates subdirs if they don't exist
 
 
 
-                        string Output_Location = DictData.OutputFileLocation + '\\' + SubDirStructure;
+                        string Output_Location = BGData.OutputFileLocation + '\\' + SubDirStructure;
 
                     if (!Directory.Exists(Output_Location))
                     {
@@ -199,7 +201,7 @@ namespace WindowsFormsApplication1
                         //read in the text file, convert everything to lowercase
                         string readText = File.ReadAllText(fileName, SelectedEncoding);
 
-                    if (DictData.CompactWhitespace) readText = Regex.Replace(readText, @"\s+", " ");
+                    if (BGData.CompactWhitespace) readText = Regex.Replace(readText, @"\s+", " ");
 
 
                         //     _                _                 _____         _   
@@ -209,17 +211,17 @@ namespace WindowsFormsApplication1
                         // /_/   \_\_| |_|\__,_|_|\__, /___\___|   |_|\___/_/\_\\__|
                         //                        |___/                             
 
-                        for (int i = 0; i < DictData.RegexArray.Length; i++)
+                        for (int i = 0; i < BGData.RegexArray.Length; i++)
                     {
 
-                        int NumMatches = DictData.RegexArray[i].Matches(readText).Count;
+                        int NumMatches = BGData.RegexArray[i].Matches(readText).Count;
 
                         if (NumMatches == 0) continue;
 
-                        DictData.NumberOfMatches[i] += (uint)NumMatches;
-                        DictData.TotalFilesMatched[i] += 1;
+                        BGData.NumberOfMatches[i] += (uint)NumMatches;
+                        BGData.TotalFilesMatched[i] += 1;
 
-                        readText = DictData.RegexArray[i].Replace(readText, DictData.ReplacementArray[i]);
+                        readText = BGData.RegexArray[i].Replace(readText, BGData.ReplacementArray[i]);
 
                     }
 
@@ -244,16 +246,16 @@ namespace WindowsFormsApplication1
                 });
 
 
-                using (StreamWriter outputFile = new StreamWriter(new FileStream(Path.Combine(DictData.OutputFileLocation, "__TextEmend-Report.csv"), FileMode.Create), SelectedEncoding))
+                using (StreamWriter outputFile = new StreamWriter(new FileStream(Path.Combine(BGData.OutputFileLocation, "__TextEmend-Report.csv"), FileMode.Create), SelectedEncoding))
                 {
                     outputFile.WriteLine("\"RegEx\",\"Replacement\",\"NumberOfMatches\",\"FilesWithPattern\"");
 
-                    for (int i = 0; i < DictData.RegexArray.Length; i++)
+                    for (int i = 0; i < BGData.RegexArray.Length; i++)
                     {
-                        outputFile.WriteLine("\"" + DictData.RegexArray[i].ToString() + "\"," +
-                                             "\"" + DictData.ReplacementArray[i] + "\"," + 
-                                             DictData.NumberOfMatches[i].ToString() + "," + 
-                                             DictData.TotalFilesMatched[i].ToString());
+                        outputFile.WriteLine("\"" + BGData.RegexArray[i].ToString() + "\"," +
+                                             "\"" + BGData.ReplacementArray[i] + "\"," + 
+                                             BGData.NumberOfMatches[i].ToString() + "," + 
+                                             BGData.TotalFilesMatched[i].ToString());
                     }
 
                     
@@ -281,6 +283,7 @@ namespace WindowsFormsApplication1
             LoadDictionaryButton.Enabled = true;
             CaseSensitiveCheckbox.Enabled = true;
             CompactWhitespaceCheckbox.Enabled = true;
+            FiletypeTextbox.Enabled = true;
             FilenameLabel.Text = "Finished!";
             MessageBox.Show("TextEmend has finished processing your texts.", "Analysis Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -291,12 +294,13 @@ namespace WindowsFormsApplication1
 
 
 
-        public class DictionaryData
+        public class BGWorkerData
         {
 
             public string TextFileFolder { get; set; }
             public string OutputFileLocation { get; set; }
 
+            public string Filetype { get; set; }
 
             public Regex[] RegexArray { get; set; }
             public string[] ReplacementArray { get; set; }
@@ -327,7 +331,7 @@ namespace WindowsFormsApplication1
 
 
             
-            DictData = new DictionaryData();
+            BGData = new BGWorkerData();
 
 
            //   ____                _   _____         _     _____                        ____ ___ ____   _____ _ _      
@@ -426,10 +430,10 @@ namespace WindowsFormsApplication1
                 }
 
 
-                DictData.RegexArray = RegexList.ToArray();
-                DictData.ReplacementArray = ReplacementList.ToArray();
+                BGData.RegexArray = RegexList.ToArray();
+                BGData.ReplacementArray = ReplacementList.ToArray();
 
-                DictData.RegExListLoaded = true;
+                BGData.RegExListLoaded = true;
 
                 DataGridPreview.DataSource = null;
                 DataGridPreview.Columns.Clear();
@@ -457,15 +461,22 @@ namespace WindowsFormsApplication1
                 DataGridPreview.Update();
 
                 MessageBox.Show("TextEmend encountered an error while trying to parse out your RegEx list. Please check to make sure that it is correctly formatted, that your regular expressions are valid, and that your list file is not currently open in another application.", "Error parsing RegEx list", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                DictData = new DictionaryData();
+                BGData = new BGWorkerData();
                 return;
             }
 
 
     }
 
+        private void label1_Click(object sender, EventArgs e)
+        {
 
+        }
 
+        private void FiletypeTextbox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
     
 

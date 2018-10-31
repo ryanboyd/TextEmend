@@ -43,6 +43,8 @@
             this.LoadDictionaryButton = new System.Windows.Forms.Button();
             this.saveOutputDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.DataGridPreview = new System.Windows.Forms.DataGridView();
+            this.FiletypeTextbox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridPreview)).BeginInit();
             this.SuspendLayout();
@@ -65,7 +67,7 @@
             // StartButton
             // 
             this.StartButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StartButton.Location = new System.Drawing.Point(512, 241);
+            this.StartButton.Location = new System.Drawing.Point(512, 287);
             this.StartButton.Name = "StartButton";
             this.StartButton.Size = new System.Drawing.Size(152, 32);
             this.StartButton.TabIndex = 3;
@@ -82,7 +84,7 @@
             // 
             this.FilenameLabel.AutoEllipsis = true;
             this.FilenameLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.FilenameLabel.Location = new System.Drawing.Point(458, 287);
+            this.FilenameLabel.Location = new System.Drawing.Point(458, 334);
             this.FilenameLabel.Name = "FilenameLabel";
             this.FilenameLabel.Size = new System.Drawing.Size(260, 15);
             this.FilenameLabel.TabIndex = 6;
@@ -156,7 +158,7 @@
             // LoadDictionaryButton
             // 
             this.LoadDictionaryButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LoadDictionaryButton.Location = new System.Drawing.Point(512, 203);
+            this.LoadDictionaryButton.Location = new System.Drawing.Point(512, 249);
             this.LoadDictionaryButton.Name = "LoadDictionaryButton";
             this.LoadDictionaryButton.Size = new System.Drawing.Size(152, 32);
             this.LoadDictionaryButton.TabIndex = 20;
@@ -173,16 +175,39 @@
             this.DataGridPreview.Name = "DataGridPreview";
             this.DataGridPreview.ReadOnly = true;
             this.DataGridPreview.RowHeadersVisible = false;
-            this.DataGridPreview.Size = new System.Drawing.Size(420, 290);
+            this.DataGridPreview.Size = new System.Drawing.Size(420, 337);
             this.DataGridPreview.TabIndex = 21;
             this.DataGridPreview.VirtualMode = true;
+            // 
+            // FiletypeTextbox
+            // 
+            this.FiletypeTextbox.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FiletypeTextbox.Location = new System.Drawing.Point(606, 209);
+            this.FiletypeTextbox.Name = "FiletypeTextbox";
+            this.FiletypeTextbox.Size = new System.Drawing.Size(100, 23);
+            this.FiletypeTextbox.TabIndex = 22;
+            this.FiletypeTextbox.Text = ".txt";
+            this.FiletypeTextbox.TextChanged += new System.EventHandler(this.FiletypeTextbox_TextChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(471, 211);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(132, 16);
+            this.label1.TabIndex = 23;
+            this.label1.Text = "Search for extension:";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSalmon;
-            this.ClientSize = new System.Drawing.Size(734, 311);
+            this.ClientSize = new System.Drawing.Size(734, 361);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.FiletypeTextbox);
             this.Controls.Add(this.DataGridPreview);
             this.Controls.Add(this.LoadDictionaryButton);
             this.Controls.Add(this.groupBox2);
@@ -191,8 +216,8 @@
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(750, 350);
-            this.MinimumSize = new System.Drawing.Size(750, 350);
+            this.MaximumSize = new System.Drawing.Size(750, 400);
+            this.MinimumSize = new System.Drawing.Size(750, 400);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TextEmend";
@@ -200,6 +225,7 @@
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridPreview)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -218,6 +244,8 @@
         private System.Windows.Forms.CheckBox CaseSensitiveCheckbox;
         private System.Windows.Forms.CheckBox CompactWhitespaceCheckbox;
         private System.Windows.Forms.DataGridView DataGridPreview;
+        private System.Windows.Forms.TextBox FiletypeTextbox;
+        private System.Windows.Forms.Label label1;
     }
 }
 
